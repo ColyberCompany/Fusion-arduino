@@ -79,13 +79,13 @@ void Fusion::FusionAhrs::setMagneticField(const float minimumMagneticField, cons
 
 void Fusion::FusionAhrs::update(const Vector3 gyroscope, const Vector3 accelerometer, const Vector3 magnetometer)
 {
-#define Q quaternion.element // define shorthand label for more readable code
+#define Q quaternion // define shorthand label for more readable code
 
     // Calculate feedback error
     Vector3 halfFeedbackError = FUSION_VECTOR3_ZERO; // scaled by 0.5 to avoid repeated multiplications by 2
     do {
         // Abandon feedback calculation if accelerometer measurement invalid
-        if ((accelerometer.axis.x == 0.0f) && (accelerometer.axis.y == 0.0f) && (accelerometer.axis.z == 0.0f)) {
+        if ((accelerometer.x == 0.0f) && (accelerometer.y == 0.0f) && (accelerometer.z == 0.0f)) {
             break;
         }
 
@@ -182,8 +182,8 @@ Fusion::Vector3 Fusion::FusionAhrs::getLinearAcceleration()
 
 Fusion::Vector3 Fusion::FusionAhrs::getEarthAcceleration()
 {
-#define Q quaternion.element // define shorthand labels for more readable code
-#define A linearAcceleration.axis
+#define Q quaternion // define shorthand labels for more readable code
+#define A linearAcceleration
     const float qwqw = Q.w * Q.w; // calculate common terms to avoid repeated operations
     const float qwqx = Q.w * Q.x;
     const float qwqy = Q.w * Q.y;
@@ -218,7 +218,7 @@ bool Fusion::FusionAhrs::isInitialising()
 
 void Fusion::FusionAhrs::setYaw(const float yaw)
 {
-#define Q quaternion.element // define shorthand label for more readable code
+#define Q quaternion // define shorthand label for more readable code
     quaternion = quaternionNormalise(quaternion); // quaternion must be normalised accurately (approximation not sufficient)
     const float inverseYaw = atan2f(Q.x * Q.y + Q.w * Q.z, Q.w * Q.w - 0.5f + Q.x * Q.x); // Euler angle of conjugate
     const float halfInverseYawMinusOffset = 0.5f * (inverseYaw - degreesToRadians(yaw));

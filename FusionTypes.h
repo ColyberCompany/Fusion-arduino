@@ -19,64 +19,47 @@ namespace Fusion
     /**
      * @brief Three-dimensional spacial vector.
      */
-    union Vector3 {
-        float array[3];
-
-        struct {
-            float x;
-            float y;
-            float z;
-        } axis;
+    struct Vector3 {
+        float x;
+        float y;
+        float z;
     };
 
     /**
-     * @brief Quaternion.  This library uses the conversion of placing the 'w'
-     * element as the first element.  Other implementations may place the 'w'
+     * @brief Quaternion. This library uses the conversion of placing the 'w'
+     * element as the first element. Other implementations may place the 'w'
      * element as the last element.
      */
-    union Quaternion {
-        float array[4];
-
-        struct {
-            float w;
-            float x;
-            float y;
-            float z;
-        } element;
+    struct Quaternion {
+        float w;
+        float x;
+        float y;
+        float z;
     };
 
     /**
      * @brief Rotation matrix in row-major order.
      * See http://en.wikipedia.org/wiki/Row-major_order
      */
-    union RotationMatrix {
-        float array[9];
-
-        struct {
-            float xx;
-            float xy;
-            float xz;
-            float yx;
-            float yy;
-            float yz;
-            float zx;
-            float zy;
-            float zz;
-        } element;
+    struct RotationMatrix {
+        float xx;
+        float xy;
+        float xz;
+        float yx;
+        float yy;
+        float yz;
+        float zx;
+        float zy;
+        float zz;
     };
 
     /**
-     * @brief Euler angles union.  The Euler angles are in the Aerospace sequence
-     * also known as the ZYX sequence.
+     * @brief The Euler angles are in the Aerospace sequence also known as the ZYX sequence.
      */
-    union EulerAngles {
-        float array[3];
-
-        struct {
-            float roll;
-            float pitch;
-            float yaw;
-        } angle;
+    struct EulerAngles {
+        float roll;
+        float pitch;
+        float yaw;
     };
 
     /**
@@ -159,9 +142,9 @@ namespace Fusion
      */
     static inline __attribute__((always_inline)) Vector3 vectorAdd(const Vector3 vectorA, const Vector3 vectorB) {
         Vector3 result;
-        result.axis.x = vectorA.axis.x + vectorB.axis.x;
-        result.axis.y = vectorA.axis.y + vectorB.axis.y;
-        result.axis.z = vectorA.axis.z + vectorB.axis.z;
+        result.x = vectorA.x + vectorB.x;
+        result.y = vectorA.y + vectorB.y;
+        result.z = vectorA.z + vectorB.z;
         return result;
     }
 
@@ -173,9 +156,9 @@ namespace Fusion
      */
     static inline __attribute__((always_inline)) Vector3 vectorSubtract(const Vector3 vectorA, const Vector3 vectorB) {
         Vector3 result;
-        result.axis.x = vectorA.axis.x - vectorB.axis.x;
-        result.axis.y = vectorA.axis.y - vectorB.axis.y;
-        result.axis.z = vectorA.axis.z - vectorB.axis.z;
+        result.x = vectorA.x - vectorB.x;
+        result.y = vectorA.y - vectorB.y;
+        result.z = vectorA.z - vectorB.z;
         return result;
     }
 
@@ -187,9 +170,9 @@ namespace Fusion
      */
     static inline __attribute__((always_inline)) Vector3 vectorMultiplyScalar(const Vector3 vector, const float scalar) {
         Vector3 result;
-        result.axis.x = vector.axis.x * scalar;
-        result.axis.y = vector.axis.y * scalar;
-        result.axis.z = vector.axis.z * scalar;
+        result.x = vector.x * scalar;
+        result.y = vector.y * scalar;
+        result.z = vector.z * scalar;
         return result;
     }
 
@@ -202,9 +185,9 @@ namespace Fusion
      */
     static inline __attribute__((always_inline)) Vector3 vectorHadamardProduct(const Vector3 vectorA, const Vector3 vectorB) {
         Vector3 result;
-        result.axis.x = vectorA.axis.x * vectorB.axis.x;
-        result.axis.y = vectorA.axis.y * vectorB.axis.y;
-        result.axis.z = vectorA.axis.z * vectorB.axis.z;
+        result.x = vectorA.x * vectorB.x;
+        result.y = vectorA.y * vectorB.y;
+        result.z = vectorA.z * vectorB.z;
         return result;
     }
 
@@ -215,12 +198,12 @@ namespace Fusion
      * @return Cross-product of vectorA and vectorB.
      */
     static inline __attribute__((always_inline)) Vector3 vectorCrossProduct(const Vector3 vectorA, const Vector3 vectorB) {
-    #define A vectorA.axis // define shorthand labels for more readable code
-    #define B vectorB.axis
+    #define A vectorA // define shorthand labels for more readable code
+    #define B vectorB
         Vector3 result;
-        result.axis.x = A.y * B.z - A.z * B.y;
-        result.axis.y = A.z * B.x - A.x * B.z;
-        result.axis.z = A.x * B.y - A.y * B.x;
+        result.x = A.y * B.z - A.z * B.y;
+        result.y = A.z * B.x - A.x * B.z;
+        result.z = A.x * B.y - A.y * B.x;
         return result;
     #undef A // undefine shorthand labels
     #undef B
@@ -232,7 +215,7 @@ namespace Fusion
      * @return Vector magnitude squared.
      */
     static inline __attribute__((always_inline)) float vectorMagnitudeSquared(const Vector3 vector) {
-    #define V vector.axis // define shorthand label for more readable code
+    #define V vector // define shorthand label for more readable code
         return V.x * V.x + V.y * V.y + V.z * V.z;
     #undef V // undefine shorthand label
     }
@@ -278,10 +261,10 @@ namespace Fusion
      */
     static inline __attribute__((always_inline)) Quaternion quaternionAdd(const Quaternion quaternionA, const Quaternion quaternionB) {
         Quaternion result;
-        result.element.w = quaternionA.element.w + quaternionB.element.w;
-        result.element.x = quaternionA.element.x + quaternionB.element.x;
-        result.element.y = quaternionA.element.y + quaternionB.element.y;
-        result.element.z = quaternionA.element.z + quaternionB.element.z;
+        result.w = quaternionA.w + quaternionB.w;
+        result.x = quaternionA.x + quaternionB.x;
+        result.y = quaternionA.y + quaternionB.y;
+        result.z = quaternionA.z + quaternionB.z;
         return result;
     }
 
@@ -292,13 +275,13 @@ namespace Fusion
      * @return quaternionA multiplied by quaternionB.
      */
     static inline __attribute__((always_inline)) Quaternion quaternionMultiply(const Quaternion quaternionA, const Quaternion quaternionB) {
-    #define A quaternionA.element // define shorthand labels for more readable code
-    #define B quaternionB.element
+    #define A quaternionA // define shorthand labels for more readable code
+    #define B quaternionB
         Quaternion result;
-        result.element.w = A.w * B.w - A.x * B.x - A.y * B.y - A.z * B.z;
-        result.element.x = A.w * B.x + A.x * B.w + A.y * B.z - A.z * B.y;
-        result.element.y = A.w * B.y - A.x * B.z + A.y * B.w + A.z * B.x;
-        result.element.z = A.w * B.z + A.x * B.y - A.y * B.x + A.z * B.w;
+        result.w = A.w * B.w - A.x * B.x - A.y * B.y - A.z * B.z;
+        result.x = A.w * B.x + A.x * B.w + A.y * B.z - A.z * B.y;
+        result.y = A.w * B.y - A.x * B.z + A.y * B.w + A.z * B.x;
+        result.z = A.w * B.z + A.x * B.y - A.y * B.x + A.z * B.w;
         return result;
     #undef A // undefine shorthand labels
     #undef B
@@ -313,13 +296,13 @@ namespace Fusion
      * @return Quaternion multiplied by vector.
      */
     static inline __attribute__((always_inline)) Quaternion quaternionMultiplyVector(const Quaternion quaternion, const Vector3 vector) {
-    #define Q quaternion.element // define shorthand labels for more readable code
-    #define V vector.axis
+    #define Q quaternion // define shorthand labels for more readable code
+    #define V vector
         Quaternion result;
-        result.element.w = -Q.x * V.x - Q.y * V.y - Q.z * V.z;
-        result.element.x = Q.w * V.x + Q.y * V.z - Q.z * V.y;
-        result.element.y = Q.w * V.y - Q.x * V.z + Q.z * V.x;
-        result.element.z = Q.w * V.z + Q.x * V.y - Q.y * V.x;
+        result.w = -Q.x * V.x - Q.y * V.y - Q.z * V.z;
+        result.x = Q.w * V.x + Q.y * V.z - Q.z * V.y;
+        result.y = Q.w * V.y - Q.x * V.z + Q.z * V.x;
+        result.z = Q.w * V.z + Q.x * V.y - Q.y * V.x;
         return result;
     #undef Q // undefine shorthand labels
     #undef V
@@ -332,10 +315,10 @@ namespace Fusion
      */
     static inline __attribute__((always_inline)) Quaternion quaternionConjugate(const Quaternion quaternion) {
         Quaternion conjugate;
-        conjugate.element.w = quaternion.element.w;
-        conjugate.element.x = -1.0f * quaternion.element.x;
-        conjugate.element.y = -1.0f * quaternion.element.y;
-        conjugate.element.z = -1.0f * quaternion.element.z;
+        conjugate.w = quaternion.w;
+        conjugate.x = -1.0f * quaternion.x;
+        conjugate.y = -1.0f * quaternion.y;
+        conjugate.z = -1.0f * quaternion.z;
         return conjugate;
     }
 
@@ -345,13 +328,13 @@ namespace Fusion
      * @return Normalised quaternion.
      */
     static inline __attribute__((always_inline)) Quaternion quaternionNormalise(const Quaternion quaternion) {
-    #define Q quaternion.element // define shorthand label for more readable code
+    #define Q quaternion // define shorthand label for more readable code
         const float magnitudeReciprocal = 1.0f / sqrtf(Q.w * Q.w + Q.x * Q.x + Q.y * Q.y + Q.z * Q.z);
         Quaternion normalisedQuaternion;
-        normalisedQuaternion.element.w = Q.w * magnitudeReciprocal;
-        normalisedQuaternion.element.x = Q.x * magnitudeReciprocal;
-        normalisedQuaternion.element.y = Q.y * magnitudeReciprocal;
-        normalisedQuaternion.element.z = Q.z * magnitudeReciprocal;
+        normalisedQuaternion.w = Q.w * magnitudeReciprocal;
+        normalisedQuaternion.x = Q.x * magnitudeReciprocal;
+        normalisedQuaternion.y = Q.y * magnitudeReciprocal;
+        normalisedQuaternion.z = Q.z * magnitudeReciprocal;
         return normalisedQuaternion;
     #undef Q // undefine shorthand label
     }
@@ -363,13 +346,13 @@ namespace Fusion
      * @return Normalised quaternion.
      */
     static inline __attribute__((always_inline)) Quaternion quaternionFastNormalise(const Quaternion quaternion) {
-    #define Q quaternion.element // define shorthand label for more readable code
+    #define Q quaternion // define shorthand label for more readable code
         const float magnitudeReciprocal = fastInverseSqrt(Q.w * Q.w + Q.x * Q.x + Q.y * Q.y + Q.z * Q.z);
         Quaternion normalisedQuaternion;
-        normalisedQuaternion.element.w = Q.w * magnitudeReciprocal;
-        normalisedQuaternion.element.x = Q.x * magnitudeReciprocal;
-        normalisedQuaternion.element.y = Q.y * magnitudeReciprocal;
-        normalisedQuaternion.element.z = Q.z * magnitudeReciprocal;
+        normalisedQuaternion.w = Q.w * magnitudeReciprocal;
+        normalisedQuaternion.x = Q.x * magnitudeReciprocal;
+        normalisedQuaternion.y = Q.y * magnitudeReciprocal;
+        normalisedQuaternion.z = Q.z * magnitudeReciprocal;
         return normalisedQuaternion;
     #undef Q // undefine shorthand label
     }
@@ -384,18 +367,18 @@ namespace Fusion
      * @return rotationMatrixA with rotationMatrixB.
      */
     static inline __attribute__((always_inline)) RotationMatrix rotationMatrixMultiply(const RotationMatrix rotationMatrixA, const RotationMatrix rotationMatrixB) {
-    #define A rotationMatrixA.element // define shorthand label for more readable code
-    #define B rotationMatrixB.element
+    #define A rotationMatrixA // define shorthand label for more readable code
+    #define B rotationMatrixB
         RotationMatrix result;
-        result.element.xx = A.xx * B.xx + A.xy * B.yx + A.xz * B.zx;
-        result.element.xy = A.xx * B.xy + A.xy * B.yy + A.xz * B.zy;
-        result.element.xz = A.xx * B.xz + A.xy * B.yz + A.xz * B.zz;
-        result.element.yx = A.yx * B.xx + A.yy * B.yx + A.yz * B.zx;
-        result.element.yy = A.yx * B.xy + A.yy * B.yy + A.yz * B.zy;
-        result.element.yz = A.yx * B.xz + A.yy * B.yz + A.yz * B.zz;
-        result.element.zx = A.zx * B.xx + A.zy * B.yx + A.zz * B.zx;
-        result.element.zy = A.zx * B.xy + A.zy * B.yy + A.zz * B.zy;
-        result.element.zz = A.zx * B.xz + A.zy * B.yz + A.zz * B.zz;
+        result.xx = A.xx * B.xx + A.xy * B.yx + A.xz * B.zx;
+        result.xy = A.xx * B.xy + A.xy * B.yy + A.xz * B.zy;
+        result.xz = A.xx * B.xz + A.xy * B.yz + A.xz * B.zz;
+        result.yx = A.yx * B.xx + A.yy * B.yx + A.yz * B.zx;
+        result.yy = A.yx * B.xy + A.yy * B.yy + A.yz * B.zy;
+        result.yz = A.yx * B.xz + A.yy * B.yz + A.yz * B.zz;
+        result.zx = A.zx * B.xx + A.zy * B.yx + A.zz * B.zx;
+        result.zy = A.zx * B.xy + A.zy * B.yy + A.zz * B.zy;
+        result.zz = A.zx * B.xz + A.zy * B.yz + A.zz * B.zz;
         return result;
     #undef A // undefine shorthand label
     #undef B
@@ -408,11 +391,11 @@ namespace Fusion
      * @return Rotation matrix multiplied with scalar.
      */
     static inline __attribute__((always_inline)) Vector3 rotationMatrixMultiplyVector(const RotationMatrix rotationMatrix, const Vector3 vector) {
-    #define R rotationMatrix.element // define shorthand label for more readable code
+    #define R rotationMatrix // define shorthand label for more readable code
         Vector3 result;
-        result.axis.x = R.xx * vector.axis.x + R.xy * vector.axis.y + R.xz * vector.axis.z;
-        result.axis.y = R.yx * vector.axis.x + R.yy * vector.axis.y + R.yz * vector.axis.z;
-        result.axis.z = R.zx * vector.axis.x + R.zy * vector.axis.y + R.zz * vector.axis.z;
+        result.x = R.xx * vector.x + R.xy * vector.y + R.xz * vector.z;
+        result.y = R.yx * vector.x + R.yy * vector.y + R.yz * vector.z;
+        result.z = R.zx * vector.x + R.zy * vector.y + R.zz * vector.z;
         return result;
     #undef R // undefine shorthand label
     }
@@ -426,7 +409,7 @@ namespace Fusion
      * @return Rotation matrix.
      */
     static inline __attribute__((always_inline)) RotationMatrix quaternionToRotationMatrix(const Quaternion quaternion) {
-    #define Q quaternion.element // define shorthand label for more readable code
+    #define Q quaternion // define shorthand label for more readable code
         const float qwqw = Q.w * Q.w; // calculate common terms to avoid repeated operations
         const float qwqx = Q.w * Q.x;
         const float qwqy = Q.w * Q.y;
@@ -435,15 +418,15 @@ namespace Fusion
         const float qxqz = Q.x * Q.z;
         const float qyqz = Q.y * Q.z;
         RotationMatrix rotationMatrix;
-        rotationMatrix.element.xx = 2.0f * (qwqw - 0.5f + Q.x * Q.x);
-        rotationMatrix.element.xy = 2.0f * (qxqy + qwqz);
-        rotationMatrix.element.xz = 2.0f * (qxqz - qwqy);
-        rotationMatrix.element.yx = 2.0f * (qxqy - qwqz);
-        rotationMatrix.element.yy = 2.0f * (qwqw - 0.5f + Q.y * Q.y);
-        rotationMatrix.element.yz = 2.0f * (qyqz + qwqx);
-        rotationMatrix.element.zx = 2.0f * (qxqz + qwqy);
-        rotationMatrix.element.zy = 2.0f * (qyqz - qwqx);
-        rotationMatrix.element.zz = 2.0f * (qwqw - 0.5f + Q.z * Q.z);
+        rotationMatrix.xx = 2.0f * (qwqw - 0.5f + Q.x * Q.x);
+        rotationMatrix.xy = 2.0f * (qxqy + qwqz);
+        rotationMatrix.xz = 2.0f * (qxqz - qwqy);
+        rotationMatrix.yx = 2.0f * (qxqy - qwqz);
+        rotationMatrix.yy = 2.0f * (qwqw - 0.5f + Q.y * Q.y);
+        rotationMatrix.yz = 2.0f * (qyqz + qwqx);
+        rotationMatrix.zx = 2.0f * (qxqz + qwqy);
+        rotationMatrix.zy = 2.0f * (qyqz - qwqx);
+        rotationMatrix.zz = 2.0f * (qwqw - 0.5f + Q.z * Q.z);
         return rotationMatrix;
     #undef Q // undefine shorthand label
     }
@@ -454,12 +437,12 @@ namespace Fusion
      * @return Euler angles in degrees.
      */
     static inline __attribute__((always_inline)) EulerAngles quaternionToEulerAngles(const Quaternion quaternion) {
-    #define Q quaternion.element // define shorthand label for more readable code
+    #define Q quaternion // define shorthand label for more readable code
         const float qwqwMinusHalf = Q.w * Q.w - 0.5f; // calculate common terms to avoid repeated operations
         EulerAngles eulerAngles;
-        eulerAngles.angle.roll = radiansToDegrees(atan2f(Q.y * Q.z - Q.w * Q.x, qwqwMinusHalf + Q.z * Q.z));
-        eulerAngles.angle.pitch = radiansToDegrees(-1.0f * asinf(2.0f * (Q.x * Q.z + Q.w * Q.y)));
-        eulerAngles.angle.yaw = radiansToDegrees(atan2f(Q.x * Q.y - Q.w * Q.z, qwqwMinusHalf + Q.x * Q.x));
+        eulerAngles.roll = radiansToDegrees(atan2f(Q.y * Q.z - Q.w * Q.x, qwqwMinusHalf + Q.z * Q.z));
+        eulerAngles.pitch = radiansToDegrees(-1.0f * asinf(2.0f * (Q.x * Q.z + Q.w * Q.y)));
+        eulerAngles.yaw = radiansToDegrees(atan2f(Q.x * Q.y - Q.w * Q.z, qwqwMinusHalf + Q.x * Q.x));
         return eulerAngles;
     #undef Q // undefine shorthand label
     }

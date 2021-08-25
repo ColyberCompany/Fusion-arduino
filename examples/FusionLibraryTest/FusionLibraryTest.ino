@@ -77,11 +77,11 @@ class : public IExecutable
     {
         EulerAngles eulerAngles = quaternionToEulerAngles(ahrs.getQuaternion());
 
-        Serial.print(eulerAngles.angle.pitch);
+        Serial.print(eulerAngles.pitch);
         Serial.print('\t');
-        Serial.print(eulerAngles.angle.roll);
+        Serial.print(eulerAngles.roll);
         Serial.print('\t');
-        Serial.println(eulerAngles.angle.yaw);
+        Serial.println(eulerAngles.yaw);
 
 
         // Vector3 earthAccel = ahrs.getEarthAcceleration();

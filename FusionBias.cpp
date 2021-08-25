@@ -30,7 +30,7 @@ Fusion::Vector3 Fusion::FusionBias::update(Vector3 gyroscope)
     gyroscope = vectorSubtract(gyroscope, gyroscopeBias);
 
     // Reset stationary timer if gyroscope not stationary
-    if ((fabs(gyroscope.axis.x) > threshold) || (fabs(gyroscope.axis.y) > threshold) || (fabs(gyroscope.axis.z) > threshold)) {
+    if ((fabs(gyroscope.x) > threshold) || (fabs(gyroscope.y) > threshold) || (fabs(gyroscope.z) > threshold)) {
         stationaryTimer = 0.0f;
         return gyroscope;
     }
